@@ -125,3 +125,7 @@
 button[data-slot="dialog-close"] {
   display: none !important;
 }
+
+* {
+  font-family: var(--font-inter) !important;
+}

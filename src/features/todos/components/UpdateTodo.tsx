@@ -6,18 +6,33 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Plus } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
+import { Todo } from "./SingleTodo";
 import { TodoForm, TodoSchema } from "./TodoForm";
-const NewTodo = () => {
-  const [open, setOpen] = useState(false);
+
+const todo: Todo = {
+  id: 1,
+  title: "Backend Infrastructure",
+  description: "Upgrading backend infrastructure for better performance",
+  priority: "extreme",
+  is_completed: true,
+  position: 1,
+  todo_date: "2025-11-15",
+  created_at: "2025-11-09T18:52:41.723930Z",
+  updated_at: "2025-11-09T18:54:52.241995Z",
+};
+
+export const UpdateTodo = () => {
+  const [open, setOpen] = useState(true);
   return (
     <div>
       <Button
         onClick={() => setOpen((p) => !p)}
         className="bg-primary hover:bg-[#3f5dea]"
       >
-        <Plus className="mr-2 h-4 w-4" /> New Task
+        <Pencil />
       </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>
@@ -25,7 +40,7 @@ const NewTodo = () => {
           <DialogHeader>
             <div className="flex justify-between items-center">
               <DialogTitle className="text-xl font-semibold">
-                Add New Task
+                Update Task
               </DialogTitle>
               <Button
                 variant={"ghost"}
@@ -42,7 +57,11 @@ const NewTodo = () => {
           <TodoForm
             setOpen={setOpen}
             handler={(values: TodoSchema) => {
-              console.log({ values });
+              console.log("update task", { values });
+            }}
+            todo={todo}
+            deleteHandler={() => {
+              toast.success("delete");
             }}
           />
         </DialogContent>
@@ -50,5 +69,3 @@ const NewTodo = () => {
     </div>
   );
 };
-
-export default NewTodo;

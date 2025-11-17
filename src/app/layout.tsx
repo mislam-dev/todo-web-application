@@ -8,6 +8,7 @@ import { Inter } from "next/font/google";
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistSans = Geist({
@@ -33,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable}  ${inter.variable} antialiased font-inter`}
       >
         <Toaster position="top-right" />
         {children}

@@ -1,34 +1,36 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-
-import { DialogFooter } from "@/components/ui/dialog";
-
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Trash } from "lucide-react";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Todo } from "./SingleTodo";
 
-export const taskSchema = z.object({
+export const todoSchema = z.object({
   title: z.string().min(1, "Title is required"),
-  date: z.string().min(1, "Date is required"),
+  todo_date: z.string().min(1, "Date is required"),
   priority: z.enum(["extreme", "moderate", "low"]),
   description: z.string().optional(),
 });
-export type TaskSchema = z.infer<typeof taskSchema>;
+export type TodoSchema = z.infer<typeof todoSchema>;
 
 export function TodoForm(props: {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  handler: (values: TaskSchema) => void;
+  handler: (values: TodoSchema) => void;
+  deleteHandler?: (id: string) => void;
+  todo?: Todo;
 }) {
-  const { setOpen, handler } = props;
-  const form = useForm<TaskSchema>({
-    resolver: zodResolver(taskSchema),
+  const { setOpen, handler, todo, deleteHandler } = props;
+  const form = useForm<TodoSchema>({
+    resolver: zodResolver(todoSchema),
     defaultValues: {
       title: "",
-      date: "",
+      todo_date: "",
       priority: "moderate",
       description: "",
     },
@@ -38,9 +40,18 @@ export function TodoForm(props: {
 
   const currentPriority = watch("priority");
 
-  const onSubmit = (data: TaskSchema) => {
+  const onSubmit = (data: TodoSchema) => {
     handler(data);
   };
+
+  useEffect(() => {
+    if (todo) {
+      form.setValue("title", todo.title);
+      form.setValue("todo_date", todo.todo_date);
+      form.setValue("priority", todo.priority);
+      form.setValue("description", todo.description);
+    }
+  }, [todo, form]);
 
   return (
     <>
@@ -59,7 +70,7 @@ export function TodoForm(props: {
           <div className="relative">
             <Input
               type="date"
-              {...register("date")}
+              {...register("todo_date")}
               className="border-[#D1D5DB]"
             />
           </div>
@@ -106,13 +117,21 @@ export function TodoForm(props: {
             className="h-52 border-[#D1D5DB] resize-none"
           />
         </div>
-
-        <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)}>
-            Cancel
-          </Button>
+        <div className="flex justify-between">
           <Button type="submit">Save</Button>
-        </DialogFooter>
+          <Button
+            variant="destructive"
+            onClick={() => {
+              if (deleteHandler) {
+                deleteHandler("id");
+                return;
+              }
+              setOpen(false);
+            }}
+          >
+            <Trash />
+          </Button>
+        </div>
       </form>
     </>
   );

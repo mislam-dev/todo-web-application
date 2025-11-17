@@ -8,6 +8,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Search } from "lucide-react";
+import { todo } from "node:test";
+import { AllTodos } from "./components/AllTodos";
 import NewTodo from "./components/NewTodo";
 import NoTodo from "./components/NoTodo";
 
@@ -67,12 +69,20 @@ const TodosContainer = () => {
             </PopoverContent>
           </Popover>
         </div>
-
-        <Card className="mt-8 h-[65vh] flex items-center justify-center border-[#D1D5DB] bg-white">
-          <CardContent className="text-center">
-            <NoTodo />
-          </CardContent>
-        </Card>
+        {todos.length === 0 && (
+          <Card className="mt-8 h-[65vh] flex items-center justify-center border-[#D1D5DB] bg-white">
+            <CardContent className="text-center">
+              <NoTodo />
+            </CardContent>
+          </Card>
+        )}
+        {todo.length > 0 && (
+          <Card className="mt-8 h-[65vh]">
+            <CardContent className="text-center">
+              <AllTodos />
+            </CardContent>
+          </Card>
+        )}
       </div>
     </>
   );
