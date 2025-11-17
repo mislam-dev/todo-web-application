@@ -121,3 +121,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+button[data-slot="dialog-close"] {
+  display: none !important;
+}

@@ -1,14 +1,8 @@
-import { Card, CardContent } from "@/components/ui/card";
-
 const NoTodo = () => {
   return (
     <div>
-      <Card className="mt-8 h-[65vh] flex items-center justify-center border-[#D1D5DB] bg-white">
-        <CardContent className="text-center">
-          <TodoIcon />
-          <p className="text-gray-600 text-lg">No todos yet</p>
-        </CardContent>
-      </Card>
+      <TodoIcon />
+      <p className="text-gray-600 text-lg">No todos yet</p>
     </div>
   );
 };
