@@ -1,8 +1,10 @@
+import { ProfileContainer } from "@/features/profile";
+
 export default function Home() {
   return (
     <div className="">
       <div>
-        <h2>Hello world</h2>
+        <ProfileContainer />
       </div>
     </div>
   );
