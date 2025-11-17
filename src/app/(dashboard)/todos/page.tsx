@@ -1,9 +1,9 @@
+import TodosContainer from "@/features/todos/Todos";
+
 export default function Home() {
   return (
     <div className="">
-      <div>
-        <h2>Hello world</h2>
-      </div>
+      <TodosContainer />
     </div>
   );
 }
