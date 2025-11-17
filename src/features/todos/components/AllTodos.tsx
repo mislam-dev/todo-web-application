@@ -45,4 +45,15 @@ const data: Todo[] = [
     created_at: "2025-11-09T18:55:42.408634Z",
     updated_at: "2025-11-09T18:55:42.408634Z",
   },
+  {
+    id: 4,
+    title: "Analytics Dashboard",
+    description: "Creating a new analytics dashboard for clients",
+    priority: "low",
+    is_completed: false,
+    position: 2,
+    todo_date: "2025-11-15",
+    created_at: "2025-11-09T18:55:42.408634Z",
+    updated_at: "2025-11-09T18:55:42.408634Z",
+  },
 ];

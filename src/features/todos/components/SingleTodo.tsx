@@ -36,7 +36,7 @@ export function SingleTodoCard({ todo }: TodoCardProps) {
     <Card
       ref={setNodeRef}
       style={style}
-      className={cn(`border rounded-xl shadow-sm`, {
+      className={cn(`border rounded shadow-sm`, {
         "border-red-200": todo.priority === "extreme",
         "border-green-200": todo.priority === "moderate",
         "border-yellow-200": todo.priority === "low",
@@ -50,7 +50,7 @@ export function SingleTodoCard({ todo }: TodoCardProps) {
 
           <div className="flex items-center gap-1">
             <span
-              className={cn(`text-sm py-[5px] px-2.5 rounded font-medium`, {
+              className={cn(`text-sm py-[5px] px-2.5 rounded`, {
                 "bg-red-100 text-red-600": todo.priority === "extreme",
                 "bg-green-100 text-green-600": todo.priority === "moderate",
                 "bg-yellow-100 text-yellow-600": todo.priority === "low",

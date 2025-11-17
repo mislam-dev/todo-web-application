@@ -25,7 +25,7 @@ const todo: Todo = {
 };
 
 export const UpdateTodo = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   return (
     <div>
       <Button

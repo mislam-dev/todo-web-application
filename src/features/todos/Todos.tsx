@@ -77,11 +77,12 @@ const TodosContainer = () => {
           </Card>
         )}
         {todo.length > 0 && (
-          <Card className="mt-8 h-[65vh]">
-            <CardContent className="text-center">
-              <AllTodos />
-            </CardContent>
-          </Card>
+          <div className="mt-10">
+            <h3 className="font-semibold text-xl text-[#0C0C0C] mb-3">
+              Your tasks
+            </h3>
+            <AllTodos />
+          </div>
         )}
       </div>
     </>
