@@ -9,7 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Axios } from "@/lib/axios";
+import { ApiClient } from "@/lib/apiClient";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { isAxiosError } from "axios";
 import { useRouter } from "next/navigation";
@@ -61,8 +61,8 @@ export function RegisterForm() {
     });
 
     try {
-      const axios = Axios.getInstance("")!;
-      await axios.post("/users/signup/", formData, { headers: {} });
+      const axios = new ApiClient("")!;
+      await axios.post("/users/signup/", formData);
       toast.success(
         "Your account is being created successfully! Redirecting in 2s!"
       );

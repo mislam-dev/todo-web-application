@@ -26,11 +26,6 @@ const formSchema = z.object({
   remember: z.boolean().optional().default(false),
 });
 
-type LoginRequestResponse = {
-  access: string;
-  refresh: string;
-};
-
 type FormValues = z.infer<typeof formSchema>;
 
 export function LoginForm() {
@@ -51,15 +46,10 @@ export function LoginForm() {
     formData.append("password", values.password);
 
     try {
-      const res = await axios.post<LoginRequestResponse>(
-        "/api/login/",
-        formData
-      );
+      await axios.post("/api/login/", formData);
       toast.success("Your have successfully logged in! Redirecting in 2s!");
       form.reset();
-      console.log(res.data);
-      // authToken.set(res.data.access);
-      // refreshToken.set(res.data.refresh);
+
       setTimeout(() => {
         router.push("/todos");
       }, 2 * 1000);

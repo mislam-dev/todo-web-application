@@ -1,5 +1,5 @@
 import { Logout } from "@/features/auth/logout";
-import { Axios } from "@/lib/axios";
+import { ApiClient } from "@/lib/apiClient";
 import { cookies } from "next/headers";
 import { Suspense } from "react";
 import { Nav } from "./navigation";
@@ -7,7 +7,7 @@ import { User, UserLoading } from "./user";
 
 const Sidebar = async () => {
   const token = (await cookies()).get("access");
-  const axios = Axios.getInstance(token?.value || "");
+  const axios = new ApiClient(token?.value || "");
   const authUserApi = axios?.get("/users/me/");
   return (
     <>

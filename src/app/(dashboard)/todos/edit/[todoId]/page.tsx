@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { EditTodoContainer } from "@/features/todos/edit";
-import { Axios } from "@/lib/axios";
+import { ApiClient } from "@/lib/apiClient";
 import { cookies } from "next/headers";
 import Link from "next/link";
 
@@ -12,7 +12,7 @@ export default async function EditTodo({
 }) {
   const token = (await cookies()).get("access");
   const { todoId } = await params;
-  const axios = Axios.getInstance(token?.value || "")!;
+  const axios = new ApiClient(token?.value || "");
   const todo = await axios.get(`/todos/${todoId}`);
   return (
     <div className="">
@@ -34,7 +34,7 @@ export default async function EditTodo({
               <div className="h-[3px] w-20 bg-primary mt-1"></div>
             </div>
             <div className="">
-              <EditTodoContainer todo={todo.data} token={token?.value || ""} />
+              <EditTodoContainer todo={todo?.data} token={token?.value || ""} />
             </div>
           </CardContent>
         </Card>

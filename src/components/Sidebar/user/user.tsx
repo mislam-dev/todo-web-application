@@ -1,5 +1,4 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { AxiosResponse } from "axios";
 import Image from "next/image";
 import { use } from "react";
 
@@ -15,7 +14,7 @@ type User = {
   bio: string;
 };
 
-export const User: React.FC<{ authUserApi: Promise<AxiosResponse> }> = ({
+export const User: React.FC<{ authUserApi: Promise<any> }> = ({
   authUserApi,
 }) => {
   const res = use(authUserApi);

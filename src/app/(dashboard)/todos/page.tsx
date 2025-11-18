@@ -7,18 +7,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { AllTodoLoader, AllTodos } from "@/features/todos";
-import { Axios } from "@/lib/axios";
 import { Plus, Search } from "lucide-react";
-import { cookies } from "next/headers";
 import Link from "next/link";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-export default async function TodoPage() {
-  const token = (await cookies()).get("access");
-  const axiosInstance = Axios.getInstance(token?.value || "");
-  const todosApi = axiosInstance?.get("/todos");
-
+export default function TodoPage() {
   return (
     <div className="">
       <div className="p-8 bg-[#eef6ff]">
@@ -80,8 +74,8 @@ export default async function TodoPage() {
           </Popover>
         </div>
         <ErrorBoundary fallback={<>Failed to load</>}>
-          <Suspense fallback={<AllTodoLoader />}>
-            <AllTodos todosApi={todosApi!} />
+          <Suspense key={"todos-page"} fallback={<AllTodoLoader />}>
+            <AllTodos />
           </Suspense>
         </ErrorBoundary>
       </div>

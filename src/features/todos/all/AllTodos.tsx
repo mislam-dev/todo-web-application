@@ -1,14 +1,17 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { AxiosResponse } from "axios";
-import { use } from "react";
+
+import { ApiClient } from "@/lib/apiClient";
+import { cookies } from "next/headers";
 import { SingleTodoCard, Todo } from "../components/SingleTodo";
 
-export const AllTodos: React.FC<{ todosApi: Promise<AxiosResponse> }> = ({
-  todosApi,
-}) => {
-  const t = use(todosApi);
-  const todos: Todo[] = t.data.results || [];
+export const AllTodos = async () => {
+  console.log("REFETCH:", Date());
+  const token = (await cookies()).get("access");
+  const axiosInstance = new ApiClient(token?.value || "");
+  const res = await axiosInstance.get("/todos/");
+  const all = res?.data;
+  const todos: Todo[] = res?.data.results || [];
 
   if (todos.length === 0) {
     return (
@@ -23,7 +26,6 @@ export const AllTodos: React.FC<{ todosApi: Promise<AxiosResponse> }> = ({
   return (
     <div className="mt-10">
       <h3 className="font-semibold text-xl text-[#0C0C0C] mb-3">Your tasks</h3>
-
       <div className="grid grid-cols-3 gap-2">
         {todos.map((todo) => {
           return <SingleTodoCard todo={todo} key={todo.id} />;

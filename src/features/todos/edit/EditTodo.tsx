@@ -1,6 +1,6 @@
 "use client";
 
-import { Axios } from "@/lib/axios";
+import { ApiClient } from "@/lib/apiClient";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Todo } from "../components/SingleTodo";
@@ -16,10 +16,13 @@ export const EditTodoContainer: React.FC<{ token: string; todo: Todo }> = ({
     Object.entries(values).forEach(([Key, value]) => {
       formData.append(Key, value);
     });
-    const axios = Axios.getInstance(token)!;
+    const axios = new ApiClient(token);
     try {
       await axios.patch(`/todos/${todo.id}/`, formData);
       router.back();
+      setTimeout(() => {
+        router.refresh();
+      }, 1);
       toast.success("Todo updated successfully!");
     } catch (error) {
       toast.error("Something went wrong try again later!");
