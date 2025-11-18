@@ -5,11 +5,17 @@ import { ApiClient } from "@/lib/apiClient";
 import { cookies } from "next/headers";
 import { SingleTodoCard, Todo } from "../components/SingleTodo";
 
-export const AllTodos = async () => {
-  console.log("REFETCH:", Date());
+export const AllTodos = async ({
+  searchParams,
+}: {
+  searchParams: Record<string, string>;
+}) => {
   const token = (await cookies()).get("access");
   const axiosInstance = new ApiClient(token?.value || "");
-  const res = await axiosInstance.get("/todos/");
+  const params = await searchParams;
+  const queryString = new URLSearchParams(params).toString();
+
+  const res = await axiosInstance.get(`/todos/?${queryString}`);
   const todos: Todo[] = res?.data.results || [];
 
   if (todos.length === 0) {
@@ -27,7 +33,13 @@ export const AllTodos = async () => {
       <h3 className="font-semibold text-xl text-[#0C0C0C] mb-3">Your tasks</h3>
       <div className="grid grid-cols-3 gap-2">
         {todos.map((todo) => {
-          return <SingleTodoCard todo={todo} key={todo.id} token={token?.value || ''} />;
+          return (
+            <SingleTodoCard
+              todo={todo}
+              key={todo.id}
+              token={token?.value || ""}
+            />
+          );
         })}
       </div>
     </div>
