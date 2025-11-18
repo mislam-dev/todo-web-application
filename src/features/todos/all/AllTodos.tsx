@@ -10,7 +10,6 @@ export const AllTodos = async () => {
   const token = (await cookies()).get("access");
   const axiosInstance = new ApiClient(token?.value || "");
   const res = await axiosInstance.get("/todos/");
-  const all = res?.data;
   const todos: Todo[] = res?.data.results || [];
 
   if (todos.length === 0) {
@@ -28,7 +27,7 @@ export const AllTodos = async () => {
       <h3 className="font-semibold text-xl text-[#0C0C0C] mb-3">Your tasks</h3>
       <div className="grid grid-cols-3 gap-2">
         {todos.map((todo) => {
-          return <SingleTodoCard todo={todo} key={todo.id} />;
+          return <SingleTodoCard todo={todo} key={todo.id} token={token?.value || ''} />;
         })}
       </div>
     </div>

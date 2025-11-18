@@ -13,23 +13,42 @@ export interface Todo {
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { ApiClient } from "@/lib/apiClient";
 import { cn } from "@/lib/utils";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical, Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+import { toast } from "sonner";
 
 interface TodoCardProps {
   todo: Todo;
+  token: string;
 }
 
-export function SingleTodoCard({ todo }: TodoCardProps) {
+export function SingleTodoCard({ todo, token }: TodoCardProps) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: todo.position });
+
+  const router = useRouter();
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+  };
+
+  const deleteHandler = async () => {
+    try {
+      const api = new ApiClient(token);
+      await api.delete(`/todos/${todo.id}/`);
+      toast.success("Todo deleted successfully");
+      router.refresh();
+    } catch (error) {
+      console.log(error);
+      toast.success("Todo deletion failed! Please try again later!");
+    }
   };
 
   return (
@@ -80,7 +99,12 @@ export function SingleTodoCard({ todo }: TodoCardProps) {
               </Button>
             </Link>
 
-            <Button size="icon" variant="secondary" className="h-8 w-8">
+            <Button
+              size="icon"
+              variant="secondary"
+              className="h-8 w-8"
+              onClick={deleteHandler}
+            >
               <Trash2 className="h-4 w-4 text-red-500" />
             </Button>
           </div>
