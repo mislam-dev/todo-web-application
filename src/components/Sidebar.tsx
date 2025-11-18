@@ -1,5 +1,6 @@
+import { Logout } from "@/features/auth/logout";
 import { cn } from "@/lib/utils";
-import { ClipboardCheck, LogOut, User } from "lucide-react";
+import { ClipboardCheck, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -79,19 +80,7 @@ const Sidebar = () => {
           </nav>
         </div>
 
-        <div className="text-white">
-          <Link
-            className={cn(
-              "flex items-center gap-3 py-[17px] px-14 text-[#8CA3CD]"
-            )}
-            href={"/"}
-          >
-            <span>
-              <LogOut />
-            </span>
-            <span>Logout</span>
-          </Link>
-        </div>
+        <Logout />
       </aside>
     </>
   );

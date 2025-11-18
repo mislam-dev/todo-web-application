@@ -1,5 +1,4 @@
 import axios, { type AxiosInstance } from "axios";
-import { authToken } from "../token/AuthToken";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
@@ -8,20 +7,19 @@ export class Axios {
   private static axiosInstance: AxiosInstance | null = null;
   private constructor() {}
 
-  public static get instance(): AxiosInstance | null {
+  public static getInstance(token: string): AxiosInstance | null {
     if (!this.axiosInstance) {
-      this.createInstance();
+      this.createInstance(token);
     }
 
     return this.axiosInstance;
   }
 
-  private static createInstance() {
+  private static createInstance(token: string) {
     this.axiosInstance = axios.create({
       baseURL: this.baseUrl,
     });
     this.axiosInstance.interceptors.request.use((config) => {
-      const token = authToken.get();
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
         return config;
@@ -32,4 +30,4 @@ export class Axios {
   }
 }
 
-export default Axios.instance as AxiosInstance;
+export default Axios;

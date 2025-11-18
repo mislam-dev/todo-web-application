@@ -7,15 +7,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { AxiosResponse } from "axios";
 import { Search } from "lucide-react";
-import { todo } from "node:test";
+import { use } from "react";
 import { AllTodos } from "./components/AllTodos";
 import NewTodo from "./components/NewTodo";
 import NoTodo from "./components/NoTodo";
 
-const TodosContainer = () => {
-  const todos = [1];
-
+const TodosContainer: React.FC<{ todosApi: Promise<AxiosResponse> }> = ({
+  todosApi,
+}) => {
+  const t = use(todosApi);
+  const todos = t.data;
   return (
     <>
       <div className="p-8 bg-[#eef6ff]">
@@ -69,19 +72,19 @@ const TodosContainer = () => {
             </PopoverContent>
           </Popover>
         </div>
-        {todos.length === 0 && (
+        {todos.results.length === 0 && (
           <Card className="mt-8 h-[65vh] flex items-center justify-center border-[#D1D5DB] bg-white">
             <CardContent className="text-center">
               <NoTodo />
             </CardContent>
           </Card>
         )}
-        {todo.length > 0 && (
+        {todos.results.length > 0 && (
           <div className="mt-10">
             <h3 className="font-semibold text-xl text-[#0C0C0C] mb-3">
               Your tasks
             </h3>
-            <AllTodos />
+            <AllTodos todos={todos.results} />
           </div>
         )}
       </div>

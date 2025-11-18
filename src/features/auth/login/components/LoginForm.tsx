@@ -10,10 +10,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { axios } from "@/lib/axios";
-import { authToken, refreshToken } from "@/lib/token";
+
 import { zodResolver } from "@hookform/resolvers/zod";
-import { isAxiosError } from "axios";
+import axios, { isAxiosError } from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -53,14 +52,14 @@ export function LoginForm() {
 
     try {
       const res = await axios.post<LoginRequestResponse>(
-        "/auth/login/",
+        "/api/login/",
         formData
       );
       toast.success("Your have successfully logged in! Redirecting in 2s!");
       form.reset();
-
-      authToken.set(res.data.access);
-      refreshToken.set(res.data.refresh);
+      console.log(res.data);
+      // authToken.set(res.data.access);
+      // refreshToken.set(res.data.refresh);
       setTimeout(() => {
         router.push("/todos");
       }, 2 * 1000);
