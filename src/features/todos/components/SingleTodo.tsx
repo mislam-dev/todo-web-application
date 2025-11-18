@@ -16,8 +16,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { GripVertical, Trash2 } from "lucide-react";
-import { UpdateTodo } from "./UpdateTodo";
+import { GripVertical, Pencil, Trash2 } from "lucide-react";
+import Link from "next/link";
 
 interface TodoCardProps {
   todo: Todo;
@@ -77,7 +77,15 @@ export function SingleTodoCard({ todo }: TodoCardProps) {
           <p className="text-sm text-gray-700">Due {todo.todo_date}</p>
 
           <div className="flex items-center gap-2">
-            <UpdateTodo />
+            {/* <UpdateTodo /> */}
+            <Button className="bg-primary hover:bg-[#3f5dea]">
+              <Link
+                href={`/todos/edit/${todo.id}`}
+                className="w-full h-full flex justify-center items-center"
+              >
+                <Pencil />
+              </Link>
+            </Button>
 
             <Button size="icon" variant="secondary" className="h-8 w-8">
               <Trash2 className="h-4 w-4 text-red-500" />

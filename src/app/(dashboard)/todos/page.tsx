@@ -10,6 +10,7 @@ import { AllTodoLoader, AllTodos } from "@/features/todos/components/AllTodos";
 import { Axios } from "@/lib/axios";
 import { Plus, Search } from "lucide-react";
 import { cookies } from "next/headers";
+import Link from "next/link";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
@@ -28,7 +29,12 @@ export default async function TodoPage() {
           </div>
 
           <Button className="bg-primary hover:bg-[#3f5dea]">
-            <Plus className="mr-2 h-4 w-4" /> New Task
+            <Link
+              href={"/todos/add"}
+              className="flex w-full h-full items-center"
+            >
+              <Plus className="mr-2 h-4 w-4" /> New Task
+            </Link>
           </Button>
         </div>
 
