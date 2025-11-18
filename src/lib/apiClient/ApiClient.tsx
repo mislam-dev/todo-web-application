@@ -23,6 +23,7 @@ export class ApiClient {
 
     if (!res.ok) {
       const errMsg = await res.text().catch(() => "Request failed");
+
       throw new Error(errMsg);
     }
 

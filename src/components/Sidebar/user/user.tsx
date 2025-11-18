@@ -23,17 +23,19 @@ export const User: React.FC<{ authUserApi: Promise<any> }> = ({
   return (
     <>
       <div className="flex flex-col items-center mb-8">
-        <div className="h-20 w-20 rounded-full overflow-hidden mb-3">
-          <Image
-            src={user?.profile_image}
-            alt="User"
-            className="w-full h-full object-cover "
-            width={80}
-            height={80}
-          />
-        </div>
+        {user.profile_image && (
+          <div className="h-20 w-20 rounded-full overflow-hidden mb-3">
+            <Image
+              src={user?.profile_image}
+              alt="User"
+              className="w-full h-full object-cover "
+              width={80}
+              height={80}
+            />
+          </div>
+        )}
         <h3 className="font-semibold text-white">
-          {user?.last_name} {user?.last_name}
+          {user?.first_name} {user?.last_name}
         </h3>
         <p className="text-sm text-white">{user?.email}</p>
       </div>
