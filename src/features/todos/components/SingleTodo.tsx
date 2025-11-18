@@ -59,7 +59,6 @@ export function SingleTodoCard({ todo }: TodoCardProps) {
               {todo.priority.charAt(0).toUpperCase() + todo.priority.slice(1)}
             </span>
 
-            {/* Drag Handle */}
             <GripVertical
               className="h-4 w-4 text-gray-400 cursor-grab "
               {...listeners}
@@ -67,25 +66,19 @@ export function SingleTodoCard({ todo }: TodoCardProps) {
           </div>
         </div>
 
-        {/* Description */}
         <p className="text-[#4B5563] mt-2 text-left text-sm ">
           {todo.description}
         </p>
 
-        {/* Footer */}
         <div className="flex justify-between items-center mt-6">
           <p className="text-sm text-gray-700">Due {todo.todo_date}</p>
 
           <div className="flex items-center gap-2">
-            {/* <UpdateTodo /> */}
-            <Button className="bg-primary hover:bg-[#3f5dea]">
-              <Link
-                href={`/todos/edit/${todo.id}`}
-                className="w-full h-full flex justify-center items-center"
-              >
+            <Link href={`/todos/edit/${todo.id}`}>
+              <Button className="bg-primary hover:bg-[#3f5dea]">
                 <Pencil />
-              </Link>
-            </Button>
+              </Button>
+            </Link>
 
             <Button size="icon" variant="secondary" className="h-8 w-8">
               <Trash2 className="h-4 w-4 text-red-500" />

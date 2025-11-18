@@ -21,10 +21,10 @@ export type TodoSchema = z.infer<typeof todoSchema>;
 export function TodoForm(props: {
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   handler: (values: TodoSchema) => void;
-  deleteHandler: (id: string) => void;
+  removeHandler: (id: string) => void;
   todo?: Todo;
 }) {
-  const { handler, todo, deleteHandler } = props;
+  const { handler, todo, removeHandler: deleteHandler } = props;
   const form = useForm<TodoSchema>({
     resolver: zodResolver(todoSchema),
     defaultValues: {

@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AxiosResponse } from "axios";
 import { use } from "react";
-import { SingleTodoCard, type Todo } from "./SingleTodo";
+import { SingleTodoCard, Todo } from "../components/SingleTodo";
 
 export const AllTodos: React.FC<{ todosApi: Promise<AxiosResponse> }> = ({
   todosApi,

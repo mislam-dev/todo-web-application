@@ -1,22 +1,33 @@
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { EditTodoContainer } from "@/features/todos/edit";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <div className="">
       <div className="w-[591px] mx-auto">
-        <div className="p-8 bg-[#eef6ff]">
-          <div className="flex justify-between items-center">
+        <Card>
+          <CardContent>
             <div>
-              <h1 className="text-4xl font-bold text-[#0d224a]">
-                Add New Task
-              </h1>
-              <div className="h-[3px] w-20 bg-primary mt-1 rounded"></div>
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl font-semibold">Update Task</h2>
+                <Button
+                  variant={"ghost"}
+                  className="underline underline-offset-4 text-sm"
+                >
+                  <Link href={"/todos"} className="w-full h-full">
+                    Go Back
+                  </Link>
+                </Button>
+              </div>
+              <div className="h-[3px] w-20 bg-primary mt-1"></div>
             </div>
-          </div>
-          <div className="">
-            <EditTodoContainer />
-          </div>
-        </div>
+            <div className="">
+              <EditTodoContainer />
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

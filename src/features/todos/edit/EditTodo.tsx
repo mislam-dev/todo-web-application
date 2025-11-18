@@ -25,7 +25,7 @@ export const EditTodoContainer = () => {
           console.log({ values });
         }}
         todo={todo}
-        deleteHandler={() => {
+        removeHandler={() => {
           router.push("/todos");
         }}
       />

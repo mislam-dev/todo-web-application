@@ -6,7 +6,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { AllTodoLoader, AllTodos } from "@/features/todos/components/AllTodos";
+import { AllTodoLoader, AllTodos } from "@/features/todos";
 import { Axios } from "@/lib/axios";
 import { Plus, Search } from "lucide-react";
 import { cookies } from "next/headers";

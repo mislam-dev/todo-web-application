@@ -8,7 +8,7 @@ export const AddTodoContainer = () => {
         handler={(values: TodoSchema) => {
           console.log({ values });
         }}
-        deleteHandler={(id: string) => {
+        removeHandler={(id: string) => {
           console.log({ id });
         }}
       />
