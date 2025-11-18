@@ -3,7 +3,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 import { ApiClient } from "@/lib/apiClient";
 import { cookies } from "next/headers";
-import { SingleTodoCard, Todo } from "../components/SingleTodo";
+import { Todo } from "../components/SingleTodo";
+import DnDList from "./DnDList";
 
 export const AllTodos = async ({
   searchParams,
@@ -31,17 +32,8 @@ export const AllTodos = async ({
   return (
     <div className="mt-10">
       <h3 className="font-semibold text-xl text-[#0C0C0C] mb-3">Your tasks</h3>
-      <div className="grid grid-cols-3 gap-2">
-        {todos.map((todo) => {
-          return (
-            <SingleTodoCard
-              todo={todo}
-              key={todo.id}
-              token={token?.value || ""}
-            />
-          );
-        })}
-      </div>
+
+      <DnDList todos={todos} token={token?.value || ""} />
     </div>
   );
 };

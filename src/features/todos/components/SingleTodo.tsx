@@ -14,7 +14,7 @@ export interface Todo {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ApiClient } from "@/lib/apiClient";
-import { cn } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical, Pencil, Trash2 } from "lucide-react";
@@ -30,7 +30,7 @@ interface TodoCardProps {
 
 export function SingleTodoCard({ todo, token }: TodoCardProps) {
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: todo.position });
+    useSortable({ id: todo.id });
 
   const router = useRouter();
 
@@ -63,7 +63,6 @@ export function SingleTodoCard({ todo, token }: TodoCardProps) {
       {...attributes}
     >
       <CardContent className="p-6">
-        {/* Header */}
         <div className="flex justify-between items-start">
           <h2 className="font-medium text-[#0D224A]">{todo.title}</h2>
 
@@ -90,7 +89,9 @@ export function SingleTodoCard({ todo, token }: TodoCardProps) {
         </p>
 
         <div className="flex justify-between items-center mt-6">
-          <p className="text-sm text-gray-700">Due {todo.todo_date}</p>
+          <p className="text-sm text-gray-700">
+            Due {formatDate(todo.todo_date)}
+          </p>
 
           <div className="flex items-center gap-2">
             <Link href={`/todos/edit/${todo.id}`}>
