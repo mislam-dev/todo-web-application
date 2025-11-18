@@ -44,6 +44,9 @@ const NewTodo = () => {
             handler={(values: TodoSchema) => {
               console.log({ values });
             }}
+            deleteHandler={(id: string) => {
+              console.log({ id });
+            }}
           />
         </DialogContent>
       </Dialog>

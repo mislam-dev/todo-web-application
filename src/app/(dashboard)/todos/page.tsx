@@ -1,6 +1,6 @@
 import TodosContainer from "@/features/todos/Todos";
 
-export default function Home() {
+export default function TodoPage() {
   return (
     <div className="">
       <TodosContainer />

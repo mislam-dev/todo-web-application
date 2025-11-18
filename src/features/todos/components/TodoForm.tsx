@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Trash } from "lucide-react";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Todo } from "./SingleTodo";
@@ -20,38 +19,30 @@ export const todoSchema = z.object({
 export type TodoSchema = z.infer<typeof todoSchema>;
 
 export function TodoForm(props: {
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   handler: (values: TodoSchema) => void;
-  deleteHandler?: (id: string) => void;
+  deleteHandler: (id: string) => void;
   todo?: Todo;
 }) {
-  const { setOpen, handler, todo, deleteHandler } = props;
+  const { handler, todo, deleteHandler } = props;
   const form = useForm<TodoSchema>({
     resolver: zodResolver(todoSchema),
     defaultValues: {
-      title: "",
-      todo_date: "",
-      priority: "moderate",
-      description: "",
+      title: todo?.title || "",
+      todo_date: todo?.todo_date || "",
+      priority: todo?.priority || "moderate",
+      description: todo?.description || "",
     },
   });
 
   const { register, handleSubmit, setValue, watch } = form;
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const currentPriority = watch("priority");
 
   const onSubmit = (data: TodoSchema) => {
     handler(data);
   };
-
-  useEffect(() => {
-    if (todo) {
-      form.setValue("title", todo.title);
-      form.setValue("todo_date", todo.todo_date);
-      form.setValue("priority", todo.priority);
-      form.setValue("description", todo.description);
-    }
-  }, [todo, form]);
 
   return (
     <>
@@ -122,11 +113,7 @@ export function TodoForm(props: {
           <Button
             variant="destructive"
             onClick={() => {
-              if (deleteHandler) {
-                deleteHandler("id");
-                return;
-              }
-              setOpen(false);
+              deleteHandler("id");
             }}
           >
             <Trash />
