@@ -2,6 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -35,82 +43,108 @@ export function TodoForm(props: {
     },
   });
 
-  const { register, handleSubmit, setValue, watch } = form;
-
-  // eslint-disable-next-line react-hooks/incompatible-library
-  const currentPriority = watch("priority");
-
   const onSubmit = (data: TodoSchema) => {
     handler(data);
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 mt-4">
-        <div className="space-y-2">
-          <label className="font-medium text-sm">Title</label>
-          <Input
-            placeholder="Task title..."
-            {...register("title")}
-            className="border-[#D1D5DB]"
-          />
-        </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 mt-4">
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="font-medium text-sm">Title</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Task title..."
+                  {...field}
+                  className="border-[#D1D5DB]"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-        <div className="space-y-2">
-          <label className="font-medium text-sm">Date</label>
-          <div className="relative">
-            <Input
-              type="date"
-              {...register("todo_date")}
-              className="border-[#D1D5DB]"
-            />
-          </div>
-        </div>
+        <FormField
+          control={form.control}
+          name="todo_date"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="font-medium text-sm">Date</FormLabel>
+              <FormControl>
+                <Input type="date" {...field} className="border-[#D1D5DB]" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-        <div className="space-y-2">
-          <label className="font-medium text-sm">Priority</label>
+        <FormField
+          control={form.control}
+          name="priority"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="font-medium text-sm">Priority</FormLabel>
+              <div className="flex items-center gap-6 mt-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="h-2 w-2 rounded-full bg-red-600"></span>
+                  <span>Extreme</span>
+                  <Checkbox
+                    checked={field.value === "extreme"}
+                    onCheckedChange={() => field.onChange("extreme")}
+                  />
+                </div>
 
-          <div className="flex items-center gap-6 mt-2">
-            <div className="flex items-center gap-2 text-sm">
-              <span className="h-2 w-2 rounded-full bg-red-600"></span>
-              <span>Extreme</span>
-              <Checkbox
-                checked={currentPriority === "extreme"}
-                onCheckedChange={() => setValue("priority", "extreme")}
-              />
-            </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="h-2 w-2 rounded-full bg-green-600"></span>
+                  <span>Moderate</span>
+                  <Checkbox
+                    checked={field.value === "moderate"}
+                    onCheckedChange={() => field.onChange("moderate")}
+                  />
+                </div>
 
-            <div className="flex items-center gap-2 text-sm">
-              <span className="h-2 w-2 rounded-full bg-green-600"></span>
-              <span>Moderate</span>
-              <Checkbox
-                checked={currentPriority === "moderate"}
-                onCheckedChange={() => setValue("priority", "moderate")}
-              />
-            </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="h-2 w-2 rounded-full bg-yellow-500"></span>
+                  <span>Low</span>
+                  <Checkbox
+                    checked={field.value === "low"}
+                    onCheckedChange={() => field.onChange("low")}
+                  />
+                </div>
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-            <div className="flex items-center gap-2 text-sm">
-              <span className="h-2 w-2 rounded-full bg-yellow-500"></span>
-              <span>Low</span>
-              <Checkbox
-                checked={currentPriority === "low"}
-                onCheckedChange={() => setValue("priority", "low")}
-              />
-            </div>
-          </div>
-        </div>
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="font-medium text-sm">
+                Task Description
+              </FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Start writing here..."
+                  {...field}
+                  className="h-52 border-[#D1D5DB] resize-none"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-        <div className="space-y-2">
-          <label className="font-medium text-sm">Task Description</label>
-          <Textarea
-            placeholder="Start writing here..."
-            {...register("description")}
-            className="h-52 border-[#D1D5DB] resize-none"
-          />
-        </div>
         <div className="flex justify-between">
           <Button type="submit">Save</Button>
           <Button
+            type="button"
             variant="destructive"
             onClick={() => {
               deleteHandler("id");
@@ -120,6 +154,6 @@ export function TodoForm(props: {
           </Button>
         </div>
       </form>
-    </>
+    </Form>
   );
 }

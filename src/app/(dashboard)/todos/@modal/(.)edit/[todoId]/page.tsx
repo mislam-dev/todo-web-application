@@ -1,33 +1,23 @@
-"use client";
 import Modal from "@/components/Modal";
-import { Button } from "@/components/ui/button";
-import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { EditTodoContainer } from "@/features/todos/edit";
-import { useRouter } from "next/navigation";
+import { Axios } from "@/lib/axios";
+import { cookies } from "next/headers";
+import Header from "./header";
 
-export default function EditTodo() {
-  const router = useRouter();
-
+export default async function EditTodo({
+  params,
+}: {
+  params: Promise<{ todoId: string }>;
+}) {
+  const token = (await cookies()).get("access");
+  const { todoId } = await params;
+  const axios = Axios.getInstance(token?.value || "")!;
+  const todo = await axios.get(`/todos/${todoId}`);
   return (
     <Modal>
       <div className="w-full mx-auto p-5">
-        <DialogHeader>
-          <div className="flex justify-between items-center">
-            <DialogTitle className="text-xl font-semibold">
-              Update Todo
-            </DialogTitle>
-            <Button
-              variant={"ghost"}
-              className="underline underline-offset-4 text-sm"
-              onClick={() => router.back()}
-            >
-              Go Back
-            </Button>
-          </div>
-          <div className="h-[3px] w-20 bg-primary mt-1"></div>
-        </DialogHeader>
-
-        <EditTodoContainer />
+        <Header />
+        <EditTodoContainer token={token?.value || ""} todo={todo.data} />
       </div>
     </Modal>
   );

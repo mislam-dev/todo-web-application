@@ -1,29 +1,34 @@
 "use client";
 
+import { Axios } from "@/lib/axios";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { Todo } from "../components/SingleTodo";
 import { TodoForm, TodoSchema } from "../components/TodoForm";
 
-const todo: Todo = {
-  id: 1,
-  title: "Backend Infrastructure",
-  description: "Upgrading backend infrastructure for better performance",
-  priority: "extreme",
-  is_completed: true,
-  position: 1,
-  todo_date: "2025-11-15",
-  created_at: "2025-11-09T18:52:41.723930Z",
-  updated_at: "2025-11-09T18:54:52.241995Z",
-};
-
-export const EditTodoContainer = () => {
+export const EditTodoContainer: React.FC<{ token: string; todo: Todo }> = ({
+  todo,
+  token,
+}) => {
   const router = useRouter();
+  const updateTodoHandler = async (values: TodoSchema) => {
+    const formData = new FormData();
+    Object.entries(values).forEach(([Key, value]) => {
+      formData.append(Key, value);
+    });
+    const axios = Axios.getInstance(token)!;
+    try {
+      await axios.patch(`/todos/${todo.id}/`, formData);
+      router.back();
+      toast.success("Todo updated successfully!");
+    } catch (error) {
+      toast.error("Something went wrong try again later!");
+    }
+  };
   return (
     <div>
       <TodoForm
-        handler={(values: TodoSchema) => {
-          console.log({ values });
-        }}
+        handler={updateTodoHandler}
         todo={todo}
         removeHandler={() => {
           router.push("/todos");

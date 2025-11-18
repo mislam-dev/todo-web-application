@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AddTodoContainer } from "@/features/todos/add";
+import { cookies } from "next/headers";
 import Link from "next/link";
 
-export default function AddNewTodo() {
+export default async function AddNewTodo() {
+  const token = (await cookies()).get("access");
   return (
     <div className="w-[591px] mx-auto">
       <Card className="bg-white">
@@ -23,9 +25,7 @@ export default function AddNewTodo() {
             <div className="h-[3px] w-20 bg-primary mt-1"></div>
           </div>
 
-          <div className="">
-            <AddTodoContainer />
-          </div>
+          <AddTodoContainer token={token?.value || ""} />
         </CardContent>
       </Card>
     </div>
