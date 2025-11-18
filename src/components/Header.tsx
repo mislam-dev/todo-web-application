@@ -1,4 +1,5 @@
 import logo from "@/images/logo.png";
+import { formatDateNumeric } from "@/lib/utils";
 import { Bell, Calendar } from "lucide-react";
 import Image from "next/image";
 import { Button } from "./ui/button";
@@ -18,8 +19,8 @@ const Header = () => {
             <Calendar />
           </Button>
           <div className=" text-[#0d2240]">
-            <p>Friday </p>
-            <p>07/11/2025</p>
+            <p>{formatDateNumeric().day} </p>
+            <p>{formatDateNumeric().formatted}</p>
           </div>
         </div>
       </header>
