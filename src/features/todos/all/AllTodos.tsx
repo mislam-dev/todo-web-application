@@ -8,7 +8,7 @@ import { SingleTodoCard, Todo } from "../components/SingleTodo";
 export const AllTodos = async ({
   searchParams,
 }: {
-  searchParams: Record<string, string>;
+  searchParams: Promise<Record<string, string>>;
 }) => {
   const token = (await cookies()).get("access");
   const axiosInstance = new ApiClient(token?.value || "");

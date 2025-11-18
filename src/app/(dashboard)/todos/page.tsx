@@ -9,7 +9,7 @@ import { ErrorBoundary } from "react-error-boundary";
 export default function TodoPage({
   searchParams,
 }: {
-  searchParams: Record<string, string>;
+  searchParams: Promise<Record<string, string>>;
 }) {
   return (
     <div className="">
